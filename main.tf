@@ -2,7 +2,7 @@
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+# you may obtain a copy of the License at
 #
 #     http://www.apache.org/licenses/LICENSE-2.0
 #
@@ -18,7 +18,7 @@ locals {
 }
 
 resource "digitalocean_kubernetes_cluster" "this" {
-  name                             = var.cluster_name
+  name                             = var.name
   region                           = var.region
   version                          = data.digitalocean_kubernetes_versions.this.latest_version
   tags                             = var.tags
@@ -29,17 +29,17 @@ resource "digitalocean_kubernetes_cluster" "this" {
   registry_integration             = var.registry_integration
 
   # Network-related Config
-  vpc_uuid       = var.vpc_uuid
+  vpc_uuid       = var.vpc_id
   cluster_subnet = var.cluster_subnet
   service_subnet = var.service_subnet
 
   node_pool {
-    name       = format("%s-%s", var.cluster_name, var.node_suffix)
-    size       = element(data.digitalocean_sizes.this.sizes, 0).slug
+    name       = format("%s-%s", var.name, var.node_suffix)
+    size       = var.instance_type
     auto_scale = var.auto_scale
     min_nodes  = var.min_nodes
     max_nodes  = var.max_nodes
-    tags       = var.tags
+    tags       = var.node_tags
     labels     = var.node_labels
   }
 
