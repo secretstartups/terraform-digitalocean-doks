@@ -17,14 +17,3 @@
 data "digitalocean_kubernetes_versions" "this" {
   version_prefix = try(var.kubernetes_version)
 }
-
-data "digitalocean_sizes" "this" {
-
-  dynamic "filter" {
-    for_each = var.do_sizes
-    content {
-      key    = filter.value["key"]
-      values = filter.value["values"]
-    }
-  }
-}
