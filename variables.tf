@@ -14,6 +14,12 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+variable "do_token" {
+  description = "DigitalOcean API token used to authenticate with the provider."
+  type        = string
+  sensitive   = true
+}
+
 variable "cluster_name" {
   description = "The name of the Kubernetes cluster."
   type        = string
