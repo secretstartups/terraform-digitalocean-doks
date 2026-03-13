@@ -94,25 +94,31 @@ output "cluster_auto_upgrade" {
 }
 
 output "cluster_kc_raw_config" {
-  value = digitalocean_kubernetes_cluster.this.kube_config[0].raw_config
+  value     = digitalocean_kubernetes_cluster.this.kube_config[0].raw_config
+  sensitive = true
 }
 
 output "cluster_kc_host" {
-  value = digitalocean_kubernetes_cluster.this.kube_config[0].host
+  value     = digitalocean_kubernetes_cluster.this.kube_config[0].host
+  sensitive = true
 }
 
 output "cluster_kc_cluster_ca_certificate" {
-  value = digitalocean_kubernetes_cluster.this.kube_config[0].cluster_ca_certificate
+  value     = digitalocean_kubernetes_cluster.this.kube_config[0].cluster_ca_certificate
+  sensitive = true
 }
 
 output "cluster_kc_token" {
-  value = digitalocean_kubernetes_cluster.this.kube_config[0].token
+  value     = digitalocean_kubernetes_cluster.this.kube_config[0].token
+  sensitive = true
 }
 
 output "cluster_kc_client_key" {
-  value = digitalocean_kubernetes_cluster.this.kube_config[0].client_key
+  value     = digitalocean_kubernetes_cluster.this.kube_config[0].client_key
+  sensitive = true
 }
 
 output "cluster_kc_client_certificate" {
-  value = digitalocean_kubernetes_cluster.this.kube_config[0].client_certificate
+  value     = digitalocean_kubernetes_cluster.this.kube_config[0].client_certificate
+  sensitive = true
 }
