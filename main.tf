@@ -29,7 +29,7 @@ resource "digitalocean_kubernetes_cluster" "this" {
   registry_integration             = var.registry_integration
 
   # Network-related Config
-  vpc_uuid       = var.vpc_id
+  vpc_uuid       = digitalocean_vpc.this.id
   cluster_subnet = var.cluster_subnet
   service_subnet = var.service_subnet
 
@@ -55,4 +55,11 @@ resource "digitalocean_kubernetes_cluster" "this" {
       tags, node_pool
     ]
   }
+}
+
+
+resource "digitalocean_vpc" "this" {
+  name     = var.name
+  region   = var.region
+  ip_range = var.vpc_cidr
 }

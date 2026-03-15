@@ -93,16 +93,22 @@ variable "public_access" {
   default     = true
 }
 
-variable "cluster_subnet" {
+variable "vpc_cidr" {
   description = "The subnet to be used for the Kubernetes cluster."
   type        = string
   default     = "10.251.0.0/16"
 }
 
+variable "cluster_subnet" {
+  description = "The subnet to be used for the Kubernetes cluster."
+  type        = string
+  default     = "10.252.0.0/20"
+}
+
 variable "service_subnet" {
   description = "The subnet to be used for the Kubernetes services."
   type        = string
-  default     = "10.252.0.0/19"
+  default     = "10.253.0.0/19"
 }
 
 variable "node_suffix" {
@@ -141,7 +147,7 @@ variable "max_nodes" {
 variable "disk_size" {
   description = "The disk size in GB for each node. Maps to runner input: nodePool.diskSize / node_pool.disk_size."
   type        = number
-  default     = 50
+  default     = 20
 }
 
 # Maps to runner input: nodePool.instanceType / node_pool.instance_type
