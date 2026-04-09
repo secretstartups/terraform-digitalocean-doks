@@ -58,7 +58,7 @@ variable "auto_upgrade" {
 variable "destroy_all_associated_resources" {
   description = "Whether to destroy all associated resources when the cluster is destroyed."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "surge_upgrade" {
