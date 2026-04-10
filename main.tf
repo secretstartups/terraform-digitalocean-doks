@@ -58,8 +58,19 @@ resource "digitalocean_kubernetes_cluster" "this" {
 }
 
 
+# DigitalOcean's cluster API returns success before the underlying Droplets
+# (nodes) are fully terminated. Without this wait, the VPC deletion immediately
+# follows the cluster deletion and DigitalOcean rejects it because the Droplets
+# are still associated with the VPC. This sleep is only active during destroy.
+resource "time_sleep" "wait_for_cluster_deletion" {
+  depends_on       = [digitalocean_kubernetes_cluster.this]
+  destroy_duration = "60s"
+}
+
 resource "digitalocean_vpc" "this" {
   name     = var.name
   region   = var.region
   ip_range = var.vpc_cidr
+
+  depends_on = [time_sleep.wait_for_cluster_deletion]
 }
