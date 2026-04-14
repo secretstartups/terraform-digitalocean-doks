@@ -62,4 +62,15 @@ resource "digitalocean_vpc" "this" {
   name     = var.name
   region   = var.region
   ip_range = var.vpc_cidr
+
+  # The DOKS cluster API returns success within ~1s, but the underlying Droplets
+  # (nodes) are still being deprovisioned by DigitalOcean asynchronously. Without
+  # a wait the VPC delete is rejected immediately ("resources still exist in VPC")
+  # and enters a long retry loop. Sleeping here gives DO time to finish cleanup
+  # before the first delete attempt, reducing total destroy time significantly.
+  # time_sleep cannot be used because cluster depends on VPC, creating a cycle.
+  provisioner "local-exec" {
+    when    = destroy
+    command = "sleep 120"
+  }
 }
