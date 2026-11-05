@@ -20,7 +20,7 @@ locals {
 resource "digitalocean_kubernetes_cluster" "this" {
   name                             = var.name
   region                           = var.region
-  version                          = data.digitalocean_kubernetes_versions.this.latest_version
+  version                          = coalesce(data.digitalocean_kubernetes_versions.this.latest_version, var.kubernetes_version)
   tags                             = var.tags
   auto_upgrade                     = var.auto_upgrade
   destroy_all_associated_resources = var.destroy_all_associated_resources
@@ -52,7 +52,7 @@ resource "digitalocean_kubernetes_cluster" "this" {
     ignore_changes = [
       # Ignore changes to tags, e.g. because a management agent
       # updates these based on some ruleset managed elsewhere.
-      tags, node_pool
+      tags, node_pool, version
     ]
   }
 }
